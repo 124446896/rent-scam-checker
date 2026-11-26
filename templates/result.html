@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Result - Rental Scam Checker</title>
+  <style>
+    body { font-family: Arial, sans-serif; max-width: 700px; margin: 40px auto; padding: 0 16px; }
+    .badge { display: inline-block; padding: 10px 18px; font-size: 22px; font-weight: bold; border: 2px solid #333; }
+    .High { background: #f8d7da; }
+    .Medium { background: #fff3cd; }
+    .Low { background: #e2e3e5; }
+    .disclaimer { background: #eee; padding: 10px; margin-top: 20px; }
+  </style>
+</head>
+<body>
+  <h1>Your result</h1>
+  <p class="badge {{ report.risk_level }}">{{ report.risk_level | upper }} RISK</p>
+
+  {% if report.reasons %}
+    <h2>Warning signs found</h2>
+    <ul>
+      {% for reason in report.reasons %}
+        <li><strong>{{ reason.category | replace("_", " ") | capitalize }}</strong>: "{{ reason.phrase }}"<br>{{ reason.explanation }}</li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>No warning signs were found.</p>
+  {% endif %}
+
+  <h2>Safety advice</h2>
+  <ul>
+    {% for tip in report.advice %}
+      <li>{{ tip }}</li>
+    {% endfor %}
+  </ul>
+
+  <p class="disclaimer">&#9432; {{ report.disclaimer }}</p>
+  <a href="/">Check another ad</a>
+</body>
+</html>

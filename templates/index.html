@@ -1,8 +1,27 @@
 <!DOCTYPE html>
 <html>
-<head><title>Rental Scam Checker</title></head>
+<head>
+  <title>Rental Scam Checker</title>
+  <style>
+    body { font-family: Arial, sans-serif; max-width: 700px; margin: 40px auto; padding: 0 16px; }
+    textarea { width: 100%; height: 200px; padding: 8px; }
+    button { padding: 10px 24px; margin-top: 10px; }
+    .warning { color: #555; font-size: 14px; }
+    .error { color: #b00020; }
+  </style>
+</head>
 <body>
   <h1>Is this rental ad a scam?</h1>
-  <p>Coming soon.</p>
+  <p>Paste the advert text (and any messages from the landlord) below.</p>
+
+  {% if error %}
+    <p class="error">{{ error }}</p>
+  {% endif %}
+
+  <form action="/check" method="post">
+    <textarea name="ad_text" placeholder="Paste the rental advert here...">{{ ad_text or "" }}</textarea>
+    <p class="warning">&#9888; Don't paste your own name, phone number or bank details.</p>
+    <button type="submit">Check ad</button>
+  </form>
 </body>
 </html>
